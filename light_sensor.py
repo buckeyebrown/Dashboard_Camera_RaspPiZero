@@ -59,6 +59,6 @@ while (count < var):
     print
 
     #Sleep for 9 seconds before next iteration
-    sleep(9)
+    time.sleep(9)
     count = count + 1
 
