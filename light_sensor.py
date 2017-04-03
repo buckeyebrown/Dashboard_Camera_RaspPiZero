@@ -4,6 +4,18 @@ import smbus
 import time
 import sys
 
+
+def isItNightTime(visible_spectrum_val):
+    nightTime = False
+    minDayTimeLux = 250
+    if (visible_spectrum_val < minDayTimeLux):
+        nightTime = True
+        print "It is Night Time! Activating Camera Night Mode."
+    else:
+        print "It is Day Time! Activating Camera Day Mode."
+
+    return nightTime
+
 # Get I2C bus
 bus = smbus.SMBus(1)
 
@@ -50,14 +62,3 @@ while (count < var):
     sleep(9)
     count = count + 1
 
-
-def isItNightTime(visible_spectrum_val):
-    nightTime = False
-    minDayTimeLux = 250
-    if (visible_spectrum_val < minDayTimeLux):
-        nightTime = True
-        print "It is Night Time! Activating Camera Night Mode."
-    else:
-        print "It is Day Time! Activating Camera Day Mode."
-
-    return nightTime
