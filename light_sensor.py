@@ -1,4 +1,6 @@
 # Python code to read the light sensor values, translate to night or day
+# Wiring setup: Vin -> RPi Pin 1 (3.3v), GND, Addr, Int -> RPi Pin 6 (Ground)
+# Wiring Setup: SOA -> RPi Pin 3 (GPIO2), SCL -> RPi Pin 5 (GPIO3)
 
 import smbus
 import time
