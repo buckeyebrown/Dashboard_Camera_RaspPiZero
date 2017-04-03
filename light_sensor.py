@@ -8,9 +8,9 @@ import sys
 bus = smbus.SMBus(1)
 
 #Get user input for how many iterations
-var = raw_input("How many iterations?")
+var = raw_input("How many iterations: ")
 count = 0
-while (count < var){
+while (count < var):
     #TSL2561 Address = 0x39 (41 in decimal)
     #Select control register, 0x00, with command register, 0x80
     #   0x03 is Power ON Mode
@@ -20,8 +20,8 @@ while (count < var){
     #   0x02    Nominal Integration Time = 402ms
     bus.write_byte_data(0x29, 0x01 | 0x80, 0x02)
 
-    # Sleep for a second
-    time.sleep(1)
+    # Sleep for 10 seconds
+    time.sleep(10)
 
     #Read data back from 0x0C with command register, 0x80, 2 bytes
     # ch0 LSB, ch0 MSB
@@ -38,10 +38,11 @@ while (count < var){
     channel1 = infrared_data[1] * 256 + infrared_data[0]
 
     #Print data to screen
+    print "Iteration: %d." %(count + 1)
     print "Full Spectrum Light (IR + Visibile) : %d lux" %channel0
     print "Infrared Value : %d lux" %channel1
     print "Visibile Spectrum Light : %d lux" %(channel0 - channel1)
-    
-    count++
-}
+    print
+    count = count + 1
+
 
