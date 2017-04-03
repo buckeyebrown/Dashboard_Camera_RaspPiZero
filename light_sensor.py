@@ -5,7 +5,7 @@
 import smbus
 import time
 import sys
-
+import RPi.GPIO as GPIO
 
 def isItNightTime(visible_spectrum_val):
     nightTime = False
@@ -17,6 +17,21 @@ def isItNightTime(visible_spectrum_val):
         print "It is Day Time! Activating Camera Day Mode."
 
     return nightTime
+
+#Turn on Infrared LED when Night
+def turnLEDOnOrOff(isItNight):
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarning(False)
+    GPIO.setup(18, GPIO.OUT)
+    if (isItNight == True):
+        GPIO.output(18, GPIO.HIGH)
+    else:
+        GPIO.output(18, GPIO.LOW)
+    return
+    
+#Next, find a function to switch camera exposure levels, etc
+def setCameraToNightMode(isItNight):
+    return
 
 # Get I2C bus
 bus = smbus.SMBus(1)
