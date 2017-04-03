@@ -18,9 +18,9 @@ with picamera.PiCamera() as camera:
 
 	timestring = time.strftime("%Y%m%d-%H%M%S")
 	filename = directory_path + "vid_" + timestring + ".h264"
-	camera.start_recording(filename, format='h264', quality=35)
+	camera.start_recording(filename, format='h264', quality=30)
 	minute_counter = 0
-	while minute_counter < 360:
+	while minute_counter < 30:
 		camera.annotate_text = time.strftime("%H%M%S")
 		camera.wait_recording(1)
 		minute_counter += 1
