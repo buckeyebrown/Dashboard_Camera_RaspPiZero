@@ -40,7 +40,7 @@ bus = smbus.SMBus(1)
 var = raw_input("How many iterations: ")
 count = 0
 while (count < var):
-    #TSL2561 Address = 0x39 (41 in decimal)
+    #TSL2561 Address = 0x29
     #Select control register, 0x00, with command register, 0x80
     #   0x03 is Power ON Mode
     bus.write_byte_data(0x29, 0x00 | 0x80, 0x03)
