@@ -5,6 +5,7 @@ import errno
 import sys
 import RPi.GPIO as GPIO
 import smbus
+import logging
 
 #Start the Raspberry Pi Camera
 def startRaspCamera():
@@ -103,9 +104,11 @@ def turnLEDOnOrOff(isItNight):
         GPIO.output(18, GPIO.HIGH)
     else:
         GPIO.output(18, GPIO.LOW)
+
     return
 
 def obtainLightSensorReading():
+    logger = createLogger()
     # Get I2C bus
     bus = smbus.SMBus(1)
 
@@ -139,8 +142,11 @@ def obtainLightSensorReading():
 
     # Print data to screen
     print "Full Spectrum Light (IR + Visibile) : %d lux" % full_spectrum_val
+    logger.info("Full Spectrum Light (IR + Visibile) : %d lux" % full_spectrum_val)
     print "Infrared Value : %d lux" % infrared_val
+    logger.info("Infrared Value : %d lux" % infrared_val)
     print "Visibile Spectrum Light : %d lux" % visible_spectrum_val
+    logger.info("Visibile Spectrum Light : %d lux" % visible_spectrum_val)
     isItNight = isItNightTime(visible_spectrum_val)
     print
 
@@ -151,16 +157,19 @@ def nightDayCheck(isItNight, camera):
         setSystemToNightMode(camera)
     else:
         setSystemToDayMode(camera)
+
     return
 
 def setSystemToNightMode(camera):
     turnOnIRLED()
     camera.exposure_mode = 'night'
+
     return
 
 def setSystemToDayMode(camera):
     turnOffIRLED()
     camera.exposure_mode = 'auto'
+
     return
 
 #Turn off LED on pin 18
@@ -171,6 +180,8 @@ def turnOffIRLED():
     print 'LED off'
     GPIO.output(18, GPIO.LOW)
 
+    return
+
 #Turn on LED on pin 18
 def turnOnIRLED():
     GPIO.setmode(GPIO.BCM)
@@ -178,6 +189,19 @@ def turnOnIRLED():
     GPIO.setup(18, GPIO.OUT)
     print 'LED on'
     GPIO.output(18, GPIO.HIGH)
+
+    return
+
+def createLogger():
+    logger = logging.getLogger(__name__)
+    filename = 'logs/' + time.strftime("%Y%m%d-%H%M") + '_camera_app.log'
+    hdlr = logging.FileHandler(filename)
+    formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+    hdlr.setFormatter(formatter)
+    logger.addHandler(hdlr)
+    logger.setLevel(logging.DEBUG)
+
+    return logger
 
 startRaspCamera()
 
