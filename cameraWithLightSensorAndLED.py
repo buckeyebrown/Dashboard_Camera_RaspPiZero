@@ -10,7 +10,7 @@ import logging
 #Start the Raspberry Pi Camera
 def startRaspCamera():
     turnOffIRLED()
-    with picamera.start_preview() as camera:
+    with picamera.PiCamera() as camera:
         camera.start_preview()
         directory_path = getDirectoryPath()
         checkIfDirectoryExistsOrCreate(directory_path)
