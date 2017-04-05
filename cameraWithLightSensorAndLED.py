@@ -50,6 +50,7 @@ def startRecording(filename, directory_path, camera):
 
 def recordForAnHour(camera):
     isItNight = obtainLightSensorReading()
+    nightDayCheck(isItNight, camera)
     minute_counter = 0
     secondsInAnHour= 3600
     secondsInFifteenMinutes = 900
@@ -57,6 +58,7 @@ def recordForAnHour(camera):
         #Check if it's night time every 15 minutes
         if ((minute_counter % secondsInFifteenMinutes) == 0):
             isItNight = obtainLightSensorReading()
+            nightDayCheck(isItNight, camera)
         camera.annotate_text = time.strftime("%H%M%S")
         camera.wait_recording(1)
         minute_counter += 1
@@ -144,12 +146,21 @@ def obtainLightSensorReading():
 
     return isItNight
 
-def setSystemToNightMode():
-    turnOnIRLED()
+def nightDayCheck(isItNight, camera):
+    if (isItNight):
+        setSystemToNightMode(camera)
+    else:
+        setSystemToDayMode(camera)
     return
 
-def setSystemToDayMode():
+def setSystemToNightMode(camera):
+    turnOnIRLED()
+    camera.exposure_mode = 'night'
+    return
+
+def setSystemToDayMode(camera):
     turnOffIRLED()
+    camera.exposure_mode = 'auto'
     return
 
 #Turn off LED on pin 18
