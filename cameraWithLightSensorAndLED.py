@@ -6,6 +6,9 @@ import sys
 import RPi.GPIO as GPIO
 import smbus
 import logging
+import pytz
+from astral import Astral
+from datetime import datetime
 
 #Start the Raspberry Pi Camera
 def startRaspCamera():
@@ -50,7 +53,7 @@ def startRecording(filename, directory_path, camera):
     return
 
 def recordForAnHour(camera):
-    isItNight = obtainLightSensorReading()
+    isItNight = checkIfNightSunset() 
     nightDayCheck(isItNight, camera)
     minute_counter = 0
     secondsInAnHour= 3600
@@ -58,7 +61,7 @@ def recordForAnHour(camera):
     while minute_counter < secondsInAnHour:
         #Check if it's night time every 15 minutes
         if ((minute_counter % secondsInFifteenMinutes) == 0):
-            isItNight = obtainLightSensorReading()
+            isItNight = checkIfNightSunset()
             nightDayCheck(isItNight, camera)
         camera.annotate_text = time.strftime("%H%M%S")
         camera.wait_recording(1)
@@ -83,6 +86,22 @@ def splitVideoIntoHours(directory_path, camera):
     camera.split_recording(filename)
 
     return
+
+def checkIfNightSunset():
+    city_name = 'Columbus'
+    a = Astral()
+    a.solar_depression = 'civil'
+    city = a[city_name]
+    isItNight = False
+    now = datetime.now(pytz.utc)
+    sun = city.sun(date=now, local=True)
+    print sun['dusk']
+    if now >= sun['dusk'] or now <= sun['dawn']:
+    	isItNight = True
+	print "nighttime"
+    else:
+	print "daytime"
+    return isItNight
 
 def isItNightTime(visible_spectrum_val):
     nightTime = False
