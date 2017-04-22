@@ -94,7 +94,7 @@ def splitVideoIntoHours(directory_path, camera):
     timestring = time.strftime("%Y%m%d-%H%M%S")
     filename = directory_path + "vid_" + timestring + ".h264"
     camera.split_recording(filename)
-    output_filename = directory_path + "vid_" + timestring + ".mp4"
+    output_filename = "vid_" + timestring + ".mp4"
     print output_filename
     callCommand = "MP4Box -add" + filename + output_filename
     call(callCommand)
