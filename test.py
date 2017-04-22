@@ -34,11 +34,11 @@ def getDirectoryPath():
 def checkIfDirectoryExistsOrCreate(directory_path):
     if not os.path.exists(directory_path):
         try:
-            original_mask = os.umask(0777)
+            original_mask = os.umask(0)
             print "the original mask is: "
             print original_mask
             print ""
-            os.makedirs(directory_path, mode=0777)
+            os.makedirs(directory_path, mode=0222)
         except OSError as error:
             if error.errno != errno.EEXIST:
                 raise
