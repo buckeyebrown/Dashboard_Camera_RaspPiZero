@@ -79,6 +79,7 @@ def recordForAnHour(camera):
     return
 
 def recordForADay(directory_path, camera):
+    logger = createLogger()
     recordForAnHour(camera)
     hour_counter = 1
     hoursInADay = 24
@@ -94,7 +95,9 @@ def splitVideoIntoHours(directory_path, camera):
     filename = directory_path + "vid_" + timestring + ".h264"
     camera.split_recording(filename)
     output_filename = directory_path + "vid_" + timestring + ".mp4"
-    call(["MP4Box", "-add", filename, output_filename])
+    print output_filename
+    time.sleep(.5)
+    call(["time","MP4Box", "-add", filename, output_filename])
     return
 
 def checkIfNightSunset():
