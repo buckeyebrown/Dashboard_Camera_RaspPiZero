@@ -97,7 +97,7 @@ def splitVideoIntoHours(directory_path, camera):
     camera.split_recording(filename_1)
     command = 'MP4Box -add {0}.h264 {1}.mp4'.format(filename, filename)
     print command
-    camera.stop_recording
+    camera.wait_recording(1)
     conv = Popen(command, shell=True)
     return
 
