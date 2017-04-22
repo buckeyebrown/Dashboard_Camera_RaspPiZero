@@ -97,7 +97,7 @@ def splitVideoIntoHours(directory_path, camera):
     output_filename = directory_path + "vid_" + timestring + ".mp4"
     print output_filename
     callCommand = "MP4Box -add " + filename + output_filename
-    call(['MP4Box', '-add', filename, output_filename], shell=True)
+    call(['MP4Box', '-add', filename, '-o', output_filename], shell=True)
     return
 
 def checkIfNightSunset():
