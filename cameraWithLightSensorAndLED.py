@@ -8,6 +8,7 @@ import smbus
 import logging
 import pytz
 import subprocess
+from subprocess import call, Popen
 from astral import Astral
 from datetime import datetime
 
@@ -85,10 +86,12 @@ def recordForADay(directory_path, camera):
 
 def splitVideoIntoHours(directory_path, camera):
     timestring = time.strftime("%Y%m%d-%H%M%S")
-    filename = directory_path + "vid_" + timestring + ".h264"
-    camera.split_recording(filename)
-    output_filename = directory_path + "vid_" + timestring + ".mp4"
-    call(["MP4Box", "-add", filename, output_filename])
+    filename = directory_path + "vid_" + timestring
+    filename_1 = filename + ".h264"
+    camera.split_recording(filename_1)
+    command = 'MP4Box -add {0}.h264 {1}.mp4'.format(filename, filename)
+    print command
+    conv = Popen(command, shell=True)
     return
 
 def checkIfNightSunset():
