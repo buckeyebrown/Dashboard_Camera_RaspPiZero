@@ -38,7 +38,7 @@ def checkIfDirectoryExistsOrCreate(directory_path):
             print "the original mask is: "
             print original_mask
             print ""
-            os.makedirs(directory_path, mode=0222)
+            os.makedirs(directory_path, mode=0777)
         except OSError as error:
             if error.errno != errno.EEXIST:
                 raise
