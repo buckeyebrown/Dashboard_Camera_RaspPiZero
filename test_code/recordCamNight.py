@@ -7,7 +7,6 @@ import RPi.GPIO as GPIO
 import smbus
 import logging
 import pytz
-import subprocess
 from astral import Astral
 from datetime import datetime
 
@@ -15,7 +14,7 @@ from datetime import datetime
 def startRaspCamera():
     turnOffIRLED()
     with picamera.PiCamera() as camera:
-        #camera.start_preview()
+        camera.start_preview()
         directory_path = getDirectoryPath()
         checkIfDirectoryExistsOrCreate(directory_path)
         filename = createFileName(directory_path)
@@ -43,7 +42,7 @@ def checkIfDirectoryExistsOrCreate(directory_path):
 
 def createFileName(directory_path):
     timestring = time.strftime("%Y%m%d-%H%M%S")
-    filename = directory_path + "vid_" + timestring + ".h264"
+    filename = directory_path + "NIGHTvid_" + timestring + ".h264"
 
     return filename
 
@@ -54,17 +53,15 @@ def startRecording(filename, directory_path, camera):
     return
 
 def recordForAnHour(camera):
-    isItNight = checkIfNightSunset() 
+    isItNight = True 
     nightDayCheck(isItNight, camera)
     minute_counter = 0
     secondsInAnHour= 3600
-    #3600 is default value
     secondsInFifteenMinutes = 900
-    #900 is default value
     while minute_counter < secondsInAnHour:
         #Check if it's night time every 15 minutes
         if ((minute_counter % secondsInFifteenMinutes) == 0):
-            isItNight = checkIfNightSunset()
+            isItNight = True
             nightDayCheck(isItNight, camera)
         camera.annotate_text = time.strftime("%H%M%S")
         camera.wait_recording(1)
@@ -87,8 +84,7 @@ def splitVideoIntoHours(directory_path, camera):
     timestring = time.strftime("%Y%m%d-%H%M%S")
     filename = directory_path + "vid_" + timestring + ".h264"
     camera.split_recording(filename)
-    output_filename = directory_path + "vid_" + timestring + ".mp4"
-    call(["MP4Box", "-add", filename, output_filename])
+
     return
 
 def checkIfNightSunset():

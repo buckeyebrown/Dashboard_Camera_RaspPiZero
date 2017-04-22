@@ -57,9 +57,9 @@ def recordForAnHour(camera):
     isItNight = checkIfNightSunset() 
     nightDayCheck(isItNight, camera)
     minute_counter = 0
-    secondsInAnHour= 3600
+    secondsInAnHour= 60
     #3600 is default value
-    secondsInFifteenMinutes = 900
+    secondsInFifteenMinutes = 30
     #900 is default value
     while minute_counter < secondsInAnHour:
         #Check if it's night time every 15 minutes
