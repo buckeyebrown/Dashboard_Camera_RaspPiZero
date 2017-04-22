@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 import smbus
 import logging
 import pytz
-import subprocess
+from subprocess import call
 from astral import Astral
 from datetime import datetime
 
@@ -34,10 +34,14 @@ def getDirectoryPath():
 def checkIfDirectoryExistsOrCreate(directory_path):
     if not os.path.exists(directory_path):
         try:
-            os.makedirs(directory_path)
+            original_mask = os.umask(0777)
+            print "the original mask is: " + original_mask
+            os.makedirs(directory_path, mode=0777)
         except OSError as error:
             if error.errno != errno.EEXIST:
                 raise
+        finally:
+            os.umask(original_mask)
 
     return
 
