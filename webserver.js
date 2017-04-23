@@ -5,7 +5,7 @@ function displayVideos(){
     $.ajax({
         url: dir,
         success: function (data) {
-            $(data).find("a:contains(" + "/" + ")").each(function () {
+            $(data).find("a:contains(" + "videos" + ")").each(function () {
                 var filename = this.href.replace(window.location, "").replace("http://", "");
                 console.log(filename);
             });
