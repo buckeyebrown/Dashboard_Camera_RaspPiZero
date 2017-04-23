@@ -48,6 +48,6 @@ function displayVideoFromDate(filename) {
     htmlString += '</video><br><br>';
     $(".displayVideoDirs").append(htmlString).hide();
 }
-function displayVideos(){
+function displayVideoFiles(){
     $(".displayVideoDirs").show();
 }
