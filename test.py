@@ -80,11 +80,11 @@ def recordForADay(directory_path, camera, originalFileName):
     hour_counter = 1
     hoursInADay = 24
 
-
     while hour_counter < hoursInADay:
         originalFileName = splitVideoIntoHours(directory_path, camera, originalFileName)
+        recordForAnHour(camera)
+        hour_counter += 1
         camera.stop_preview()
-	recordForAnHour(camera)
     camera.stop_recording()
 
     return
@@ -96,6 +96,7 @@ def splitVideoIntoHours(directory_path, camera, originalFileName):
     camera.split_recording(newFileName)
     command = 'MP4Box -add {0} {1}.mp4'.format(originalFileName, originalFileName[:-5])
     conv = Popen(command, shell=True)
+    conv.wait()
     os.remove(originalFileName)
     return newFileName
 
