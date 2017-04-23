@@ -48,7 +48,7 @@ function displayDateHTML(date) {
 }
 
 function displayVideoFromDate(filename) {
-    htmlString = '<video width="320" height="240" controls>';
+    htmlString = '<video controls>';
     htmlString += '<source src="/recorded_videos/'
     htmlString += filename;
     htmlString += '" type="video/mp4">Browser does not support HTML5 video';
