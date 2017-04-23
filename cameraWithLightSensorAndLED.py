@@ -10,6 +10,7 @@ import pytz
 from subprocess import call, Popen
 from astral import Astral
 from datetime import datetime
+from fractions import Fraction
 
 #Start the Raspberry Pi Camera
 def startRaspCamera():
