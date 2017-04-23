@@ -25,9 +25,7 @@ def startRaspCamera():
 
 #Get the directory path for the videos being saved
 def getDirectoryPath():
-    filelocation = "/home/pi/code/Dashboard_Camera_RaspPiZero/recorded_videos/"
-    foldername = time.strftime("%Y%m%d") + "_videos/"
-    directory_path = filelocation + foldername
+    directory_path = "/home/pi/code/Dashboard_Camera_RaspPiZero/recorded_videos/"
 
     return directory_path
 
@@ -35,9 +33,6 @@ def checkIfDirectoryExistsOrCreate(directory_path):
     if not os.path.exists(directory_path):
         try:
             original_mask = os.umask(0)
-            print "the original mask is: "
-            print original_mask
-            print ""
             os.makedirs(directory_path, mode=0777)
         except OSError as error:
             if error.errno != errno.EEXIST:
