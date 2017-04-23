@@ -2,53 +2,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://momentjs.com/downloads/moment.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<style>
-    .displayVideoDirs {display: none}
-</style>
 <html>
     <body>
        <h1>ECE 4900 Project - Dashboard Videos</h1>
        <script>displayVideos()</script>
-       <div class="displayVideoTitle"></div>
-       <div class="w3-content" style="max-width:800px">
-            <div class="displayVideoDirs"></div>
-           <div class="w3-center">
-              <div class="w3-section">
-                <button class="w3-button" onclick="plusDivs(-1)">❮ Prev</button>
-                <button class="w3-button" onclick="plusDivs(1)">Next ❯</button>
-              </div>
-                 <button class="w3-button demo" onclick="currentDiv(1)">1</button>
-  <button class="w3-button demo" onclick="currentDiv(2)">2</button>
-  <button class="w3-button demo" onclick="currentDiv(3)">3</button> 
-           </div>
-       </div>
-        <script>
-    var slideIndex = 1;
-    showDivs(slideIndex);
-
-    function plusDivs(n) {
-      showDivs(slideIndex += n);
-    }
-
-    function currentDiv(n) {
-      showDivs(slideIndex = n);
-    }
-
-    function showDivs(n) {
-      var i;
-      var x = document.getElementsByClassName("displayVideoDirs");
-      var dots = document.getElementsByClassName("demo");
-      if (n > x.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = x.length}
-      for (i = 0; i < x.length; i++) {
-         x[i].style.display = "none";
-      }
-      for (i = 0; i < dots.length; i++) {
-         dots[i].className = dots[i].className.replace(" w3-red", "");
-      }
-      x[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " w3-red";
-    }
-    </script>
+       <div class="displayVideoDirs"></div>
     </body>
 </html>
