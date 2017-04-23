@@ -15,7 +15,7 @@ from datetime import datetime
 def startRaspCamera():
     turnOffIRLED()
     with picamera.PiCamera() as camera:
-        #camera.start_preview()
+        camera.start_preview()
         directory_path = getDirectoryPath()
         checkIfDirectoryExistsOrCreate(directory_path)
         filename = createFileName(directory_path)
