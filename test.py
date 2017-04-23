@@ -85,18 +85,10 @@ def recordForADay(directory_path, camera):
     hour_counter = 1
     hoursInADay = 24
 
-    for filename in camera.record_sequence([
-        'clip01.h264', 'clip02.h264', 'clip03.h264'
-    ]):
-        print('Recording to %s' % filename)
-        camera.wait_recording(10)
-        command = 'MP4Box -add {0} {1}.mp4'.format(filename, filename)
-        conv = Popen(command, shell=True)
 
-
-    #while hour_counter < hoursInADay:
-    #    splitVideoIntoHours(directory_path, camera)
-    #    recordForAnHour(camera)
+    while hour_counter < hoursInADay:
+        camera = splitVideoIntoHours(directory_path, camera)
+        recordForAnHour(camera)
     camera.stop_recording()
 
     return
@@ -106,12 +98,12 @@ def splitVideoIntoHours(directory_path, camera):
 
     filename = directory_path + "vid_" + timestring
     filename_1 = filename + ".h264"
-    camera.split_recording(filename_1)
     command = 'MP4Box -add {0}.h264 {1}.mp4'.format(filename, filename)
-    camera.wait_recording(1)
     camera.stop_recording()
     conv = Popen(command, shell=True)
-    return
+    camera.start_recording(filename_1, format='h264', quality=35)
+
+    return camera
 
 def checkIfNightSunset():
     city_name = 'Columbus'
