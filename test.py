@@ -16,6 +16,7 @@ def startRaspCamera():
     turnOffIRLED()
     with picamera.PiCamera() as camera:
         camera.start_preview()
+        camera.rotation = 90
         directory_path = getDirectoryPath()
         checkIfDirectoryExistsOrCreate(directory_path)
         filename = createFileName(directory_path)
