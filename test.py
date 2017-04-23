@@ -26,7 +26,7 @@ def startRaspCamera():
 #Get the directory path for the videos being saved
 def getDirectoryPath():
     filelocation = "/home/pi/recorded_videos/"
-    foldername = time.strftime("%Y%m%d") + "_videos/"
+    foldername = time.strftime("%H%M%S") + "_videos/"
     directory_path = filelocation + foldername
 
     return directory_path
@@ -48,7 +48,7 @@ def checkIfDirectoryExistsOrCreate(directory_path):
     return
 
 def createFileName(directory_path):
-    timestring = time.strftime("%Y%m%d-%H%M%S")
+    timestring = time.strftime("%H%M%S")
     filename = directory_path + "vid_" + timestring + ".h264"
 
     return filename
