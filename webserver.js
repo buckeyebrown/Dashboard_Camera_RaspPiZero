@@ -7,9 +7,9 @@ function displayVideos(){
         success: function (data) {
             $(data).find("a:contains(" + fileExtension + ")").each(function () {
                 var filename = this.href.replace(window.location, "").replace("http://", "");
-                var something = String(filename).split['-'];
+                var something = filename.toString().split['-'][0];
                 console.log(filename);
-                console.log(something[0]);
+                console.log(something);
             });
         }
     });
