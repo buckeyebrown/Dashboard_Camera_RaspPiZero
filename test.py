@@ -67,6 +67,7 @@ def recordForAnHour(camera):
     #3600 is default value
     secondsInFifteenMinutes = 5
     #900 is default value
+
     while minute_counter < secondsInAnHour:
         #Check if it's night time every 15 minutes
         if ((minute_counter % secondsInFifteenMinutes) == 0):
@@ -83,20 +84,30 @@ def recordForADay(directory_path, camera):
     recordForAnHour(camera)
     hour_counter = 1
     hoursInADay = 24
-    while hour_counter < hoursInADay:
-        splitVideoIntoHours(directory_path, camera)
-        recordForAnHour(camera)
+
+    for filename in camera.record_sequence([
+        'clip01.h264', 'clip02.h264', 'clip03.h264'
+    ]):
+        print('Recording to %s' % filename)
+        camera.wait_recording(10)
+        command = 'MP4Box -add {0} {1}.mp4'.format(filename, filename)
+        conv = Popen(command, shell=True)
+
+
+    #while hour_counter < hoursInADay:
+    #    splitVideoIntoHours(directory_path, camera)
+    #    recordForAnHour(camera)
     camera.stop_recording()
 
     return
 
 def splitVideoIntoHours(directory_path, camera):
-    timestring = time.strftime("%Y%m%d-%H%M%S")
+    timestring = time.strftime("%H%M%S")
+
     filename = directory_path + "vid_" + timestring
     filename_1 = filename + ".h264"
     camera.split_recording(filename_1)
     command = 'MP4Box -add {0}.h264 {1}.mp4'.format(filename, filename)
-    print command
     camera.wait_recording(1)
     camera.stop_recording()
     conv = Popen(command, shell=True)
