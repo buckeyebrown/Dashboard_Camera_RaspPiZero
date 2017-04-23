@@ -36,7 +36,7 @@ function displayDateHTML(date) {
         htmlString += moment(date).format('MMMM Do YYYY');
         htmlString += '</h2>';
         htmlString += '</div>';
-        $(".displayVideoDirs").append(htmlString);
+        $(".displayVideoHeaders").append(htmlString);
     }
 }
 
