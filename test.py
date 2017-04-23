@@ -33,7 +33,7 @@ def checkIfDirectoryExistsOrCreate(directory_path):
     if not os.path.exists(directory_path):
         try:
             original_mask = os.umask(0)
-            os.makedirs(directory_path, mode=0777)
+            os.makedirs(directory_path, mode=0700)
         except OSError as error:
             if error.errno != errno.EXIST:
                 raise

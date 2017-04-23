@@ -41,10 +41,10 @@ function displayDateHTML(date) {
 }
 
 function displayVideoFromDate(filename) {
-    htmlString = '<br><br><video width="320" height="240" controls>';
+    htmlString = '<video width="320" height="240" controls>';
     htmlString += '<source src="/recorded_videos/'
     htmlString += filename;
     htmlString += '" type="video/mp4">Browser does not support HTML5 video';
-    htmlString += '</video>';
+    htmlString += '</video><br><br>';
     $(".displayVideoDirs").append(htmlString);
 }
