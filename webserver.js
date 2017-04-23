@@ -31,7 +31,7 @@ function displayDateHTML(date) {
     if (elementExists == null){
         htmlString = '<div id="';
         htmlString += idString
-        htmlString += ' class="videosShown"><h2>';
+        htmlString += '" class= "videosShown"><h2>';
         htmlString += 'Videos from ';
         htmlString += moment(date).format('MMMM Do YYYY');
         htmlString += '</h2>';
