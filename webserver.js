@@ -6,7 +6,7 @@ function displayVideos(){
         url: dir,
         success: function (data) {
             $(data).find("a:contains(" + fileExtension + ")").each(function () {
-                var foldername = this.href.replace(window.location, "").replace("http://", "");
+                var filename = this.href.replace(window.location, "").replace("http://", "");
                 console.log(filename);
             });
         }
