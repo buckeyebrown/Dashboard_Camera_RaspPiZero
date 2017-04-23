@@ -26,10 +26,13 @@ function parseYYYYMMDD(str) {
 }
 
 function displayDateHTML(date) {
-    htmlString = '<h2>';
+    htmlString = '<div id="day_';
+    htmlString += date.getDate().toString();
+    htmlString += ' class="videosShown"><h2>';
     htmlString += 'Videos from ';
     htmlString += moment(date).format('MMMM Do YYYY');
     htmlString += '</h2>';
+    htmlString += '</div>';
     $(".displayVideoDirs").append(htmlString);
 }
 

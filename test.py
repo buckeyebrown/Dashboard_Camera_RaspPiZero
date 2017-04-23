@@ -89,16 +89,12 @@ def recordForADay(directory_path, camera, originalFileName):
     return
 
 def splitVideoIntoHours(directory_path, camera, originalFileName):
-    logger = createLogger()
     timestring = time.strftime("%H%M%S")
     filename = directory_path + "vid_" + timestring
     newFileName = filename + ".h264"
     camera.split_recording(newFileName)
     command = 'MP4Box -add {0} {1}.mp4'.format(originalFileName, originalFileName[:-5])
     conv = Popen(command, shell=True)
-    for line in conv.stdout:
-        logger.info(line)
-    conv.wait()
     os.remove(originalFileName)
     return newFileName
 
