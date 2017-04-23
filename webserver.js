@@ -26,18 +26,22 @@ function parseYYYYMMDD(str) {
 }
 
 function displayDateHTML(date) {
-    htmlString = '<div id="day_';
-    htmlString += date.getDate().toString();
-    htmlString += ' class="videosShown"><h2>';
-    htmlString += 'Videos from ';
-    htmlString += moment(date).format('MMMM Do YYYY');
-    htmlString += '</h2>';
-    htmlString += '</div>';
-    $(".displayVideoDirs").append(htmlString);
+    idString = 'day_' + date.getDate().toString();
+    var elementExists = document.getElementById(idString);
+    if (elementExists == null){
+        htmlString = '<div id="';
+        htmlString += idString
+        htmlString += ' class="videosShown"><h2>';
+        htmlString += 'Videos from ';
+        htmlString += moment(date).format('MMMM Do YYYY');
+        htmlString += '</h2>';
+        htmlString += '</div>';
+        $(".displayVideoDirs").append(htmlString);
+    }
 }
 
 function displayVideoFromDate(filename) {
-    htmlString = '<video width="320" height="240" controls>';
+    htmlString = '<br><br><video width="320" height="240" controls>';
     htmlString += '<source src="/recorded_videos/'
     htmlString += filename;
     htmlString += '" type="video/mp4">Browser does not support HTML5 video';
