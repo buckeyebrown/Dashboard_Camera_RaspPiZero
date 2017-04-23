@@ -19,10 +19,6 @@ function displayVideos(){
              });
         }
     });
-
-
-    innerHTML = 'hi';
-    $(".displayVideoDirs").html(innerHTML);
 }
 
 function parseYYYYMMDD(str) {
