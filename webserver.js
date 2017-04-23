@@ -46,8 +46,6 @@ function displayVideoFromDate(filename) {
     htmlString += filename;
     htmlString += '" type="video/mp4">Browser does not support HTML5 video';
     htmlString += '</video><br><br>';
-    $(".displayVideoDirs").append(htmlString).hide();
+    $(".displayVideoDirs").append(htmlString);
 }
-function displayVideoFiles(){
-    $(".displayVideoDirs").show();
-}
+
