@@ -9,11 +9,7 @@ function displayVideos(){
                 var filetimestamp = filename.split('_')[1].split('-');
                 var yearMonthDay = filetimestamp[0];
                 var hourMinSec = filetimestamp[1].split('.')[0];
-                //console.log(filename);
-                //console.log(yearMonthDay);
-                //console.log(hourMinSec);
                 var ymdDate = parseYYYYMMDD(yearMonthDay);
-                //console.log(ymdDate);
                 displayDateHTML(ymdDate);
                 displayVideoFromDate(filename);
              });
@@ -32,7 +28,7 @@ function parseYYYYMMDD(str) {
 function displayDateHTML(date) {
     htmlString = '<h2>';
     htmlString += 'Videos from ';
-    htmlString += date.toString();
+    htmlString += moment(date).format('MMMM Do YYYY');
     htmlString += '</h2>';
     $(".displayVideoDirs").append(htmlString);
 }

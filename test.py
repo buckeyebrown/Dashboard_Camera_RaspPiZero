@@ -110,7 +110,6 @@ def checkIfNightSunset():
     isItNight = False
     now = datetime.now(pytz.utc)
     sun = city.sun(date=now, local=True)
-    print sun['dusk']
     if now >= sun['sunset'] or now <= sun['sunrise']:
     	isItNight = True
 	print "nighttime"
