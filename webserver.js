@@ -17,6 +17,7 @@ function displayVideos(){
              });
         }
     });
+    addOnJLoad();
     console.log(filename_map);
     filename_map.forEach(function(value) {
         displayDateHTML(ymdDate);
@@ -77,4 +78,19 @@ function displaySlidesForEachVal(filename_map) {
     });
     $("listForEachVal").html(htmlListString);
     $("carousel-inner").html(htmlSlideString);
+}
+
+function addOnJLoad() {
+    htmlString = '<div id="myCarousel" class="carousel slide" data-ride="carousel">' +
+    '<ol class="carousel-indicators"><div class="listForEachVal"></div>' +
+    '</ol><div class="carousel-inner" role="listbox"></div>' +
+        '<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">' +
+      '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>' +
+      '<span class="sr-only">Previous</span>' +
+    '</a>' +
+    '<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">' +
+      '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>' +
+      '<span class="sr-only">Next</span>' +
+    '</a></div>';
+    $("addOnJqueryLoad").html(htmlString);
 }
