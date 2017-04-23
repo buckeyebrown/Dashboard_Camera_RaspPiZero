@@ -25,7 +25,7 @@ def startRaspCamera():
 
 #Get the directory path for the videos being saved
 def getDirectoryPath():
-    filelocation = "/home/pi/recorded_videos/"
+    filelocation = "/home/pi/code/Dashboard_Camera_RaspPiZero/recorded_videos/"
     foldername = time.strftime("%Y%m%d") + "_videos/"
     directory_path = filelocation + foldername
 
