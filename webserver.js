@@ -21,6 +21,7 @@ function displayVideos(){
     filename_map.forEach(function(value) {
         displayDateHTML(ymdDate);
     });
+    displaySlidesForEachVal(filename_map);
 }
 
 function parseYYYYMMDD(str) {
@@ -52,5 +53,28 @@ function displayVideoFromDate(filename) {
     htmlString += filename;
     htmlString += '" type="video/mp4">Browser does not support HTML5 video';
     htmlString += '</video><br><br>';
-    $(".displayVideoDirs").append(htmlString);
+    //$(".displayVideoDirs").append(htmlString);
+    return htmlString;
+}
+
+function displaySlidesForEachVal(filename_map) {
+    htmlListString = "";
+    htmlSlideString = "";
+    var a = 0;
+    filename_map.forEach(function(key){
+        if (a == 0) {
+            htmlListString += '<li data-target="#myCarousel" data-slide-to="' + a.toString() + '" class="active"></li>';
+            htmlSlideString += '<div class="item active">';
+            htmlSlideString += displayVideoFromDate(key);
+            htmlSlideString += '</div>';
+        }
+        else {
+            htmlListString += '<li data-target="#myCarousel" data-slide-to="' + a.toString() + '></li>';
+            htmlSlideString += '<div class="item">';
+            htmlSlideString += displayVideoFromDate(key);
+            htmlSlideString += '</div>';
+        }
+    });
+    $("listForEachVal").html(htmlListString);
+    $("carousel-inner").html(htmlSlideString);
 }
