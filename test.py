@@ -35,7 +35,7 @@ def checkIfDirectoryExistsOrCreate(directory_path):
             original_mask = os.umask(0)
             os.makedirs(directory_path, mode=0777)
         except OSError as error:
-            if error.errno != errno.EEXIST:
+            if error.errno != errno.EXIST:
                 raise
         finally:
             os.umask(original_mask)
@@ -75,7 +75,6 @@ def recordForAnHour(camera):
     return
 
 def recordForADay(directory_path, camera, originalFileName):
-    logger = createLogger()
     recordForAnHour(camera)
     hour_counter = 1
     hoursInADay = 24
@@ -90,14 +89,18 @@ def recordForADay(directory_path, camera, originalFileName):
     return
 
 def splitVideoIntoHours(directory_path, camera, originalFileName):
+    logger = createLogger()
     timestring = time.strftime("%H%M%S")
-
     filename = directory_path + "vid_" + timestring
-    filename_1 = filename + ".h264"
-    camera.split_recording(filename_1)
+    newFileName = filename + ".h264"
+    camera.split_recording(newFileName)
     command = 'MP4Box -add {0} {1}.mp4'.format(originalFileName, originalFileName[:-5])
     conv = Popen(command, shell=True)
-    return filename_1
+    for line in conv.stdout:
+        logger.info(line)
+    conv.wait()
+    os.remove(originalFileName)
+    return newFileName
 
 def checkIfNightSunset():
     city_name = 'Columbus'
