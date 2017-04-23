@@ -10,7 +10,7 @@ function displayVideos(){
                 var something = filename.split('_')[1].split('-');
                 console.log(filename);
                 console.log(something[0]);
-                console.log(something[0]);
+                console.log(something[1]);
             });
         }
     });
