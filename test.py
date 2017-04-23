@@ -15,7 +15,7 @@ from datetime import datetime
 def startRaspCamera():
     turnOffIRLED()
     with picamera.PiCamera() as camera:
-        camera.start_preview()
+        #camera.start_preview()
         directory_path = getDirectoryPath()
         checkIfDirectoryExistsOrCreate(directory_path)
         filename = createFileName(directory_path)
@@ -48,14 +48,14 @@ def checkIfDirectoryExistsOrCreate(directory_path):
     return
 
 def createFileName(directory_path):
-    timestring = time.strftime("%H%M%S")
+    timestring = time.strftime("%Y%m%d-%H%M%S")
     filename = directory_path + "vid_" + timestring + ".h264"
 
     return filename
 
 def startRecording(filename, directory_path, camera):
     camera.start_recording(filename, format='h264', quality=35)
-    recordForADay(directory_path, camera)
+    recordForADay(directory_path, camera, filename)
 
     return
 
@@ -79,7 +79,7 @@ def recordForAnHour(camera):
 
     return
 
-def recordForADay(directory_path, camera):
+def recordForADay(directory_path, camera, originalFileName):
     logger = createLogger()
     recordForAnHour(camera)
     hour_counter = 1
@@ -87,23 +87,21 @@ def recordForADay(directory_path, camera):
 
 
     while hour_counter < hoursInADay:
-        camera = splitVideoIntoHours(directory_path, camera)
+        originalFileName = splitVideoIntoHours(directory_path, camera, originalFileName)
         recordForAnHour(camera)
     camera.stop_recording()
 
     return
 
-def splitVideoIntoHours(directory_path, camera):
+def splitVideoIntoHours(directory_path, camera, originalFileName):
     timestring = time.strftime("%H%M%S")
 
     filename = directory_path + "vid_" + timestring
     filename_1 = filename + ".h264"
-    command = 'MP4Box -add {0}.h264 {1}.mp4'.format(filename, filename)
-    camera.stop_recording()
+    camera.split_recording(filename_1)
+    command = 'MP4Box -add {0} {1}.mp4'.format(originalFileName, originalFileName)
     conv = Popen(command, shell=True)
-    #camera.start_recording(filename_1, format='h264', quality=35)
-
-    return camera
+    return filename_1
 
 def checkIfNightSunset():
     city_name = 'Columbus'
