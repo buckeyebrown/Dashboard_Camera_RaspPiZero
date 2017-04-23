@@ -13,11 +13,15 @@ function displayVideos(){
                 var ymdDate = parseYYYYMMDD(yearMonthDay);
                 filename_map.set(filename, ymdDate);
                 displayDateHTML(ymdDate);
-                displayVideoFromDate(filename);
+                //displayVideoFromDate(filename);
              });
         }
     });
     console.log(filename_map);
+    filename_map.forEach(function(value, key) {
+        console.log(key + ' = ' + value);
+        });
+
 }
 
 function parseYYYYMMDD(str) {
