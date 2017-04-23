@@ -9,7 +9,7 @@ function displayVideos(){
                 var filename = this.href.replace(window.location, "").replace("http://", "");
                 var something = filename.split['_'];
                 console.log(filename);
-                console.log(something[1]);
+                console.log(something[0]);
             });
         }
     });
