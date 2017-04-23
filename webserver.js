@@ -1,6 +1,7 @@
 function displayVideos(){
     var dir = "recorded_videos/";
     var fileExtension = ".mp4";
+    var filename_map = new Map();
     $.ajax({
         url: dir,
         success: function (data) {
@@ -10,11 +11,13 @@ function displayVideos(){
                 var yearMonthDay = filetimestamp[0];
                 var hourMinSec = filetimestamp[1].split('.')[0];
                 var ymdDate = parseYYYYMMDD(yearMonthDay);
+                filename_map.set(filename, ymdDate);
                 displayDateHTML(ymdDate);
                 displayVideoFromDate(filename);
              });
         }
     });
+    console.log(filename_map);
 }
 
 function parseYYYYMMDD(str) {
