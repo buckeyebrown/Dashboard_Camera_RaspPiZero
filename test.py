@@ -90,7 +90,7 @@ def recordForADay(directory_path, camera, originalFileName):
     return
 
 def splitVideoIntoHours(directory_path, camera, originalFileName):
-    timestring = time.strftime("%H%M%S")
+    timestring = time.strftime("%Y%m%d-%H%M%S")
     filename = directory_path + "vid_" + timestring
     newFileName = filename + ".h264"
     camera.split_recording(newFileName)
