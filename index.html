@@ -1,4 +1,5 @@
 <script type="text/javascript" src="webserver.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <html>
     <body>
        <h1>HTML page for ECE 4900 proj</h1>
@@ -6,5 +7,7 @@
            <source src="/recorded_videos/vid_203108.mp4" type="video/mp4">
            Browser does not support HTML5's video
        </video>
+       <input type="button" id='find' value='Run JS' onclick="displayVideos()">
+       <div class="displayVideoDirs"></div>
     </body>
 </html>
