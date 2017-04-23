@@ -18,7 +18,7 @@ function displayVideos(){
         }
     });
     console.log(filename_map);
-    console.log(filename_map.size());
+    console.log(filename_map.size);
     filename_map.forEach(function(value, key) {
         console.log(key + ' = ' + value);
         });
