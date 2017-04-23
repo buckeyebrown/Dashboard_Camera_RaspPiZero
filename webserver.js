@@ -9,12 +9,13 @@ function displayVideos(){
                 var filetimestamp = filename.split('_')[1].split('-');
                 var yearMonthDay = filetimestamp[0];
                 var hourMinSec = filetimestamp[1].split('.')[0];
-                console.log(filename);
-                console.log(yearMonthDay);
-                console.log(hourMinSec);
+                //console.log(filename);
+                //console.log(yearMonthDay);
+                //console.log(hourMinSec);
                 var ymdDate = parseYYYYMMDD(yearMonthDay);
-                console.log(ymdDate);
+                //console.log(ymdDate);
                 displayDateHTML(ymdDate);
+                displayVideoFromDate(filename);
              });
         }
     });
@@ -33,9 +34,17 @@ function parseYYYYMMDD(str) {
 }
 
 function displayDateHTML(date) {
-    htmlString = '<h3>';
+    htmlString = '<h2>';
     htmlString += 'Videos from ';
     htmlString += date.toString();
-    htmlString += '</h3>';
+    htmlString += '</h2>';
     $(".displayVideoDirs").append(htmlString);
+}
+
+function displayVideoFromDate(filename) {
+    htmlString = '<video width="320" height="240" controls>';
+    htmlString += '<source src="/recorded_videos/'
+    htmlString += filename;
+    htmlString += '" type="video/mp4">Browser does not support HTML5 video';
+    htmlString += '</video>';
 }
