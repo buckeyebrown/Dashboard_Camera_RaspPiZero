@@ -7,7 +7,6 @@ import RPi.GPIO as GPIO
 import smbus
 import logging
 import pytz
-import subprocess
 from subprocess import call, Popen
 from astral import Astral
 from datetime import datetime
@@ -16,7 +15,8 @@ from datetime import datetime
 def startRaspCamera():
     turnOffIRLED()
     with picamera.PiCamera() as camera:
-        #camera.start_preview()
+        camera.start_preview()
+        camera.rotation = 90
         directory_path = getDirectoryPath()
         checkIfDirectoryExistsOrCreate(directory_path)
         filename = createFileName(directory_path)
@@ -26,19 +26,20 @@ def startRaspCamera():
 
 #Get the directory path for the videos being saved
 def getDirectoryPath():
-    filelocation = "/home/pi/recorded_videos/"
-    foldername = time.strftime("%Y%m%d") + "_videos/"
-    directory_path = filelocation + foldername
+    directory_path = "/home/pi/code/Dashboard_Camera_RaspPiZero/recorded_videos/"
 
     return directory_path
 
 def checkIfDirectoryExistsOrCreate(directory_path):
     if not os.path.exists(directory_path):
         try:
-            os.makedirs(directory_path)
+            original_mask = os.umask(0)
+            os.makedirs(directory_path, mode=0777)
         except OSError as error:
-            if error.errno != errno.EEXIST:
+            if error.errno != errno.EXIST:
                 raise
+        finally:
+            os.umask(original_mask)
 
     return
 
@@ -50,7 +51,7 @@ def createFileName(directory_path):
 
 def startRecording(filename, directory_path, camera):
     camera.start_recording(filename, format='h264', quality=35)
-    recordForADay(directory_path, camera)
+    recordForADay(directory_path, camera, filename)
 
     return
 
@@ -58,10 +59,11 @@ def recordForAnHour(camera):
     isItNight = checkIfNightSunset() 
     nightDayCheck(isItNight, camera)
     minute_counter = 0
-    secondsInAnHour= 3600
+    secondsInAnHour= 60
     #3600 is default value
-    secondsInFifteenMinutes = 900
+    secondsInFifteenMinutes = 15
     #900 is default value
+
     while minute_counter < secondsInAnHour:
         #Check if it's night time every 15 minutes
         if ((minute_counter % secondsInFifteenMinutes) == 0):
@@ -73,26 +75,30 @@ def recordForAnHour(camera):
 
     return
 
-def recordForADay(directory_path, camera):
+def recordForADay(directory_path, camera, originalFileName):
     recordForAnHour(camera)
     hour_counter = 1
     hoursInADay = 24
+
     while hour_counter < hoursInADay:
-        splitVideoIntoHours(directory_path, camera)
+        originalFileName = splitVideoIntoHours(directory_path, camera, originalFileName)
         recordForAnHour(camera)
+        hour_counter += 1
+        camera.stop_preview()
     camera.stop_recording()
 
     return
 
-def splitVideoIntoHours(directory_path, camera):
+def splitVideoIntoHours(directory_path, camera, originalFileName):
     timestring = time.strftime("%Y%m%d-%H%M%S")
     filename = directory_path + "vid_" + timestring
-    filename_1 = filename + ".h264"
-    camera.split_recording(filename_1)
-    command = 'MP4Box -add {0}.h264 {1}.mp4'.format(filename, filename)
-    print command
+    newFileName = filename + ".h264"
+    camera.split_recording(newFileName)
+    command = 'MP4Box -add {0} {1}.mp4'.format(originalFileName, originalFileName[:-5])
     conv = Popen(command, shell=True)
-    return
+    conv.wait()
+    os.remove(originalFileName)
+    return newFileName
 
 def checkIfNightSunset():
     city_name = 'Columbus'
@@ -102,8 +108,7 @@ def checkIfNightSunset():
     isItNight = False
     now = datetime.now(pytz.utc)
     sun = city.sun(date=now, local=True)
-    print sun['dusk']
-    if now >= sun['dusk'] or now <= sun['dawn']:
+    if now >= sun['sunset'] or now <= sun['sunrise']:
     	isItNight = True
 	print "nighttime"
     else:
