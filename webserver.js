@@ -43,7 +43,7 @@ function displayDateHTML(date, filename_map) {
         htmlString += '</h2>';
         htmlString += displayVideoFromDate()
         htmlString += '</div>';
-        $(".displayVideoTitle").append(htmlString);
+        $(".displayVideoDirs").append(htmlString);
     }
 }
 
