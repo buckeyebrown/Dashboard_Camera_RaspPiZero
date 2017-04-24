@@ -15,7 +15,7 @@ function displayVideos(){
                 var hourMinSec = filetimestamp[1].split('.')[0];
                 var ymdDate = parseYYYYMMDD(yearMonthDay);
                 filename_map.set(filename, ymdDate);
-                displayDateHTML(ymdDate, filename_map);
+                //displayDateHTML(ymdDate, filename_map);
                 displayVideoFromDate(filename);
              });
         }
