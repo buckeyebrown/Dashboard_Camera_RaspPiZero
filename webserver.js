@@ -12,15 +12,15 @@ function displayVideos(){
                 var hourMinSec = filetimestamp[1].split('.')[0];
                 var ymdDate = parseYYYYMMDD(yearMonthDay);
                 filename_map.set(filename, ymdDate);
-                displayDateHTML(ymdDate);
-                displayVideoFromDate(filename);
+                //displayDateHTML(ymdDate);
+                //displayVideoFromDate(filename);
              });
         }
     });
     console.log(filename_map);
     filename_map.forEach(function(value, key) {
         //console.log(value);
-       displayDateHTML(ymdDate);
+       displayDateHTML(value);
        displayVideoFromDate(key);
     });
 }
