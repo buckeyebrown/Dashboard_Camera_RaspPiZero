@@ -18,10 +18,11 @@ function displayVideos(){
         }
     });
     console.log(filename_map);
-    //filename_map.forEach(function(value, key) {
-    //    displayDateHTML(ymdDate);
-    //    displayVideoFromDate(key);
-    //});
+    filename_map.forEach(function(value, key) {
+        console.log(value);
+       displayDateHTML(ymdDate);
+       displayVideoFromDate(key);
+    });
 }
 
 function parseYYYYMMDD(str) {
