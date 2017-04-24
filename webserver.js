@@ -9,7 +9,6 @@ function displayVideos(){
         url: dir,
         success: function (data) {
             $(data).find("a:contains(" + fileExtension + ")").each(function () {
-                flag++;
                 var filename = this.href.replace(window.location, "").replace("http://", "");
                 var filetimestamp = filename.split('_')[1].split('-');
                 var yearMonthDay = filetimestamp[0];
