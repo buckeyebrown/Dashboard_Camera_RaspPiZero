@@ -17,12 +17,11 @@ function displayVideos(){
              });
         }
     });
-    addOnJLoad();
     console.log(filename_map);
-    filename_map.forEach(function(value) {
+    filename_map.forEach(function(value, key) {
         displayDateHTML(ymdDate);
+        displayVideoFromDate(key);
     });
-    displaySlidesForEachVal(filename_map);
 }
 
 function parseYYYYMMDD(str) {
@@ -54,43 +53,5 @@ function displayVideoFromDate(filename) {
     htmlString += filename;
     htmlString += '" type="video/mp4">Browser does not support HTML5 video';
     htmlString += '</video><br><br>';
-    //$(".displayVideoDirs").append(htmlString);
-    return htmlString;
-}
-
-function displaySlidesForEachVal(filename_map) {
-    htmlListString = "";
-    htmlSlideString = "";
-    var a = 0;
-    filename_map.forEach(function(key){
-        if (a == 0) {
-            htmlListString += '<li data-target="#myCarousel" data-slide-to="' + a.toString() + '" class="active"></li>';
-            htmlSlideString += '<div class="item active">';
-            htmlSlideString += displayVideoFromDate(key);
-            htmlSlideString += '</div>';
-        }
-        else {
-            htmlListString += '<li data-target="#myCarousel" data-slide-to="' + a.toString() + '></li>';
-            htmlSlideString += '<div class="item">';
-            htmlSlideString += displayVideoFromDate(key);
-            htmlSlideString += '</div>';
-        }
-    });
-    $("listForEachVal").html(htmlListString);
-    $("carousel-inner").html(htmlSlideString);
-}
-
-function addOnJLoad() {
-    htmlString = '<div id="myCarousel" class="carousel slide" data-ride="carousel">' +
-    '<ol class="carousel-indicators"><div class="listForEachVal"></div>' +
-    '</ol><div class="carousel-inner" role="listbox"></div>' +
-        '<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">' +
-      '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>' +
-      '<span class="sr-only">Previous</span>' +
-    '</a>' +
-    '<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">' +
-      '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>' +
-      '<span class="sr-only">Next</span>' +
-    '</a></div>';
-    $("addOnJqueryLoad").html(htmlString);
+    $(".displayVideoDirs").append(htmlString);
 }
