@@ -13,7 +13,7 @@ function displayVideos(){
                 var ymdDate = parseYYYYMMDD(yearMonthDay);
                 filename_map.set(filename, ymdDate);
                 displayDateHTML(ymdDate);
-                displayVideoFromDate(filename);
+                //displayVideoFromDate(filename);
              });
         }
     });
@@ -44,7 +44,7 @@ function displayDateHTML(date) {
         htmlString += moment(date).format('MMMM Do YYYY');
         htmlString += '</h2>';
         htmlString += '</div>';
-        $(".displayVideoDirs").html(htmlString);
+        $(".displayVideoTitle").append(htmlString);
     }
 }
 
