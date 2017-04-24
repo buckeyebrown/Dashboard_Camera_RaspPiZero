@@ -16,7 +16,7 @@ function displayVideos(){
                 var ymdDate = parseYYYYMMDD(yearMonthDay);
                 filename_map.set(filename, ymdDate);
                 //displayDateHTML(ymdDate, filename_map);
-                displayVideoFromDate(filename);
+                //displayVideoFromDate(filename);
              });
         }
     });
