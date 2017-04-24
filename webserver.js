@@ -16,8 +16,8 @@ function displayVideos(){
                 var hourMinSec = filetimestamp[1].split('.')[0];
                 var ymdDate = parseYYYYMMDD(yearMonthDay);
                 filename_map.set(filename, ymdDate);
-                //displayDateHTML(ymdDate, filename_map);
-                //displayVideoFromDate(filename);
+                displayDateHTML(ymdDate, filename_map);
+                displayVideoFromDate(filename);
              });
         }
     });
@@ -54,6 +54,6 @@ function displayVideoFromDate(filename) {
     htmlString += filename;
     htmlString += '" type="video/mp4">Browser does not support HTML5 video';
     htmlString += '</video><br><br>';
-    //$(".displayVideoDirs").append(htmlString);
-    return htmlString;
+    $(".displayVideoDirs").append(htmlString);
+    //return htmlString;
 }
