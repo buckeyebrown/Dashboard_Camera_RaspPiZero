@@ -2,27 +2,26 @@ function displayVideos(){
     var dir = "recorded_videos/";
     var fileExtension = ".mp4";
     var filename_map = new Map();
+   // var filename_stack = new Stack();
+    //var oldDate;
+    //var flag = 0;
     $.ajax({
         url: dir,
         success: function (data) {
             $(data).find("a:contains(" + fileExtension + ")").each(function () {
+                flag++;
                 var filename = this.href.replace(window.location, "").replace("http://", "");
                 var filetimestamp = filename.split('_')[1].split('-');
                 var yearMonthDay = filetimestamp[0];
                 var hourMinSec = filetimestamp[1].split('.')[0];
                 var ymdDate = parseYYYYMMDD(yearMonthDay);
                 filename_map.set(filename, ymdDate);
-                displayDateHTML(ymdDate);
+                //displayDateHTML(ymdDate, filename_map);
                 //displayVideoFromDate(filename);
              });
         }
     });
     console.log(filename_map);
-    filename_map.forEach(function(value, key) {
-        console.log(value);
-       //displayDateHTML(value);
-       //displayVideoFromDate(key);
-    });
 }
 
 function parseYYYYMMDD(str) {
@@ -33,7 +32,7 @@ function parseYYYYMMDD(str) {
     return new Date(y,m,d);
 }
 
-function displayDateHTML(date) {
+function displayDateHTML(date, filename_map) {
     idString = 'day_' + date.getDate().toString();
     var elementExists = document.getElementById(idString);
     if (elementExists == null){
@@ -43,6 +42,7 @@ function displayDateHTML(date) {
         htmlString += 'Videos from ';
         htmlString += moment(date).format('MMMM Do YYYY');
         htmlString += '</h2>';
+        htmlString += displayVideoFromDate()
         htmlString += '</div>';
         $(".displayVideoTitle").append(htmlString);
     }
@@ -54,5 +54,6 @@ function displayVideoFromDate(filename) {
     htmlString += filename;
     htmlString += '" type="video/mp4">Browser does not support HTML5 video';
     htmlString += '</video><br><br>';
-    $(".displayVideoDirs").append(htmlString);
+    //$(".displayVideoDirs").append(htmlString);
+    return htmlString;
 }
