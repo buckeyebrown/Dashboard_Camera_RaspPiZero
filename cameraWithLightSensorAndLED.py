@@ -51,7 +51,7 @@ def createFileName(directory_path):
     return filename
 
 def startRecording(filename, directory_path, camera):
-    camera.start_recording(filename, format='h264', quality=35)
+    camera.start_recording(filename, format='h264', quality=85)
     recordForADay(directory_path, camera, filename)
 
     return
