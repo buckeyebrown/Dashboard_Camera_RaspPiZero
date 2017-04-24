@@ -19,7 +19,7 @@ function displayVideos(){
     });
     console.log(filename_map);
     filename_map.forEach(function(value, key) {
-        console.log(value);
+        //console.log(value);
        displayDateHTML(ymdDate);
        displayVideoFromDate(key);
     });
